@@ -27,6 +27,7 @@ Function Get-DnsEntry($iphost)
         #{ $ips = @("") }
 
  #ELSE { Throw "Specify either an IP V4 address or a hostname" }  
+ Start-Sleep -m 500
    } # Get-Whatif 関数の終わり  
 }  
 #foreach ($hostname in $hostnames) {
