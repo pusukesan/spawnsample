@@ -7,9 +7,21 @@
 $ipaddresses = @"
 8.8.8.8
 8.8.4.4
+216.58.197.4
+182.22.25.252
+hogehoge
+8.8.8.8
 "@  -split "`r`n"
 
+$networknames = @"
+googlea
+googleb
+yahoo
+google
+"@
+
 $rows = @("ip,hostname")
+$ncount = 0
 #$hostnames = @()
 #$result = $false
 
@@ -17,6 +29,8 @@ foreach ($ip in $ipaddresses)
 {
   try { $tmphostname = [System.Net.Dns]::GetHostEntry($ip).Hostname }
   catch [Exception] { $tmphostname = "" }
+    if ($tmphostname -match "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$") { $tmphostname = "" }
+     write-host "resolving" + $ip + is + $tmphostname
   $rows += $ip + "," + $tmphostname
   Start-Sleep -m 500
    }
