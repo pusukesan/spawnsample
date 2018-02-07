@@ -11,7 +11,7 @@ $ipaddresses = @"
 
 $rows = @("ip,hostname")
 #$hostnames = @()
-$result = $false
+#$result = $false
 
 foreach ($ip in $ipaddresses)
 {
