@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+import os
+import csv
+
+os.chdir('/pylearn/visjs')
+f=open('myfile.html', 'w')
+f.write('<html>\n')
+f.write('<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>\n')
+f.write('<style type="text/css">\n')
+f.write('#mynetwork {width: 900px;height: 600px;border: 1px solid lightgray;}\n')
+f.write('</style></head><body><div id="mynetwork"></div>\n')
+f.write('<script type="text/javascript">\n')
+f.write('var nodes = new vis.DataSet([\n')
+
+#open nodes file
+with open('nods.csv') as f_c:
+    csv_f = csv.reader(f_c)
+    l = [row for row in csv_f]
+
+#open edges file
+with open('edge.csv') as f_d:
+    csv_g = csv.reader(f_d)
+    m = [row for row in csv_g]
+
+###nodes
+for i in l:
+    if i[4] == "":
+        f.write('{id:\''+i[0]+ '\',label:\'' +i[1]+'\',group:\''+i[2]+'\',level:'+i[3]+'},\n')
+    else:
+        pass
+    #if i[4] != "":
+    #    pass
+    #else:
+    #    f.write('{id:\''+i[0]+ '\',label:\'' +i[1]+'\',group:\''+i[2]+'\',level:'+i[3]+'},\n')
+    
+f.write(']);\n')
+
+###edges
+f.write('var edges = new vis.DataSet([\n')
+
+for j in m:
+    if j[2] == "":
+        f.write('{from:\''+j[0]+'\',to:\''+j[1]+'\'},\n')
+    else:
+        pass
+
+#{from: 1, to: 3},
+f.write(']);\n')
+
+
+f.write('var container = document.getElementById("mynetwork");\n')
+f.write('var data = {nodes: nodes, edges: edges};\n')
+f.write('var options = {edges: {"smooth": {"type": "continuous","forceDirection": "none","roundness": 0}},\n')
+f.write('nodes: {"shape": "box"},\n')
+f.write('layout: {hierarchical: {direction: "UD",sortMethod: "directed",nodeSpacing: 400}}};\n')    
+
+f.write('var network = new vis.Network(container, data, options);\n')
+f.write('</script></body></html>')
+
+f.close()
+
+'''
+[nods.csv]
+id,label,group,level,comment
+cs001p,cs001p,cs,1,,
+cs002p,cs002p,cs,1,,
+ds001p,ds001p,ds,2,,
+ds002p,ds002p,ds,2,,
+
+[edge.csv]
+from,to,comment
+cs001p,cs002p,,
+cs001p,ds001p,,
+cs001p,ds002p,,
+cs002p,ds001p,,
+cs002p,ds002p,,
+'''
+
