@@ -12,8 +12,11 @@ f.write('<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"
 f.write('<style type="text/css">\n')
 f.write('#mynetwork {width: 900px;height: 600px;border: 1px solid lightgray;}\n')
 f.write('</style></head><body><div id="mynetwork"></div>\n')
+f.write('<div class="container-fluid">\n')
+f.write('<input type="text" id="inputSearch" placeholder="Please enter the ip address"><button id="btnSearch">Search</button>\n')
+#f.write('<div id="mynetwork"></div></div>')
 f.write('<script type="text/javascript">\n')
-f.write('var allNodes + [\n')
+f.write('var allNodes = [\n')
 #f.write('var nodes = new vis.DataSet([\n')
 
 #open nodes file
@@ -37,7 +40,7 @@ for i in l:
     #else:
     #    f.write('{id:\''+i[0]+ '\',label:\'' +i[1]+'\',group:\''+i[2]+'\',level:'+i[3]+'},\n')
     
-f.write(']);\n')
+f.write('];\n')
 
 f.write('var nodes = new vis.DataSet(allNodes);\n')
 
@@ -62,10 +65,10 @@ f.write('layout: {hierarchical: {direction: "UD",sortMethod: "directed",nodeSpac
 
 f.write('var network = new vis.Network(container, data, options);\n')
 ##search button click event
-f.write('$("#btnSearch").on('click',function () {\n')
+f.write('$("#btnSearch").on(\'click\',function () {\n')
 f.write('for (var i = 0;i<allNodes.length;i++){\n')
-f.write('if (allNodes[i].label.indexOf($("#inputSearch").val()) >=0  && $("#inputSearch").val() != ''){\n')
-f.wirte('console.log(i);\n')
+f.write('if (allNodes[i].label.indexOf($("#inputSearch").val()) >=0  && $("#inputSearch").val() != \'\'){\n')
+f.write('console.log(i);\n')
 f.write('console.log(allNodes[i]);\n')
 f.write('allNodes[i].color = { border: "#406897" };\n')
 f.write('allNodes[i].shape = "square";\n')                
@@ -77,7 +80,7 @@ f.write('allNodes[i].shape = "box";\n')
 f.write('delete  allNodes[i].shapeProperties;\n}\n}\n')
 f.write('new vis.Network(container, data, options);\n});\n')
 
-f.write('$('.container-fluid').keydown(function(event){\nif(event.keyCode==13){\n$("#btnSearch").click();}});\n')
+f.write('$(\'.container-fluid\').keydown(function(event){\nif(event.keyCode==13){\n$("#btnSearch").click();}});\n')
 
 
 f.write('</script></body></html>')
